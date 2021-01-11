@@ -1,10 +1,11 @@
 <!-- Material Toolbar Example -->
 <mat-toolbar color="primary" class="navbar">
   <!-- <span>Angular Learning Path</span> -->
-  <div>Angular Learning Path</div>
+  <div class="pageHeader">{{pageHeader}}</div>
   <div>
     <span>Home</span>
     <span>About</span>
+    <span>Contact</span>
     <span>Services</span>
   </div>
 </mat-toolbar>
@@ -38,11 +39,12 @@ color               (primary, accent, warn)
   <button color="accent" mat-stroked-button>Accent</button>
 <!-- Add disable Ripple on below button -->
   <button color="warn" disableRipple mat-stroked-button>Warning</button>
+<!-- Create a button with Anchor Link Tag  -->
+  <button mat-stroked-button color="primary" class="cusLink">
+    <a mat-button href="https://www.google.co.in/" target="_blank">Google Link</a>
+  </button> 
 </div>
 
-<button mat-stroked-button color="primary" class="cusLink">
-  <a mat-button href="https://www.google.co.in/" target="_blank">Google Link</a>
-</button> 
 
 <!-- <div class="mat-display-4">This is div 4</div>
 <div class="mat-display-3">This is div 3</div>
@@ -66,29 +68,38 @@ color               (primary, accent, warn)
 </div> -->
 
 <div class="toggleCheckedValues">
-  <label for="">Toggle Checked Values : &nbsp; </label> <strong>{{toggleBtn.checked}}</strong>
-  <label for="">ToggleGroup Checked Values : &nbsp; </label> <strong>{{toggleGroup.value}}</strong>
+  <label for=""><i>Toggle Checked Values : &nbsp;</i></label> <strong>{{toggleBtn.checked}}</strong>
+  <label for=""><i>ToggleGroup Checked Values : &nbsp;</i></label> <strong>{{toggleGroup.value}}</strong>
+  <label class="" ><i>Web Technology : &nbsp; </i>
+    <strong>{{menuSelectedValue}}</strong>
+  </label>
+  <label class=""><i>Selected Tabs : &nbsp;</i>
+    <strong>{{templateRefTabs.selectedIndex}}</strong>
+  </label>
 </div>
 
 <!-- Button Toggle Tutorial -->
 <div class="buttonElement">
+  
+  <!-- Mat-Icon Component Learning -->
+    <mat-icon color="primary">thumb_up_alt</mat-icon>
+  <!-- </div> -->
+
   <mat-button-toggle #toggleBtn checked disableRipple>Toggle</mat-button-toggle>
   <!-- {{toggleBtn.checked}} -->
+  
 
   <!-- Button Toggle Group Directive -->
   <mat-button-toggle-group #toggleGroup="matButtonToggleGroup" multiple>
     <mat-button-toggle value="angular">Angular.js</mat-button-toggle>
-    <mat-button-toggle value="react">React.js</mat-button-toggle>
+    <mat-button-toggle value="react" checked>React.js</mat-button-toggle>
     <mat-button-toggle value="vue">Vue.js</mat-button-toggle>
   </mat-button-toggle-group>
   <!-- {{toggleGroup.value}} -->
 
-<!-- Mat-Icon Component Learning -->
-  <mat-icon color="primary">thumb_up_alt</mat-icon>
-</div>
 
 <!-- MatBadge Attribute -->
-<div class="notify">
+<!-- <div class="notify"> -->
   <div>
     <!-- Property binding from app.component.ts to here on [matBadge] with '*notification*' variable  -->
     <!-- [matBadgeHidden] will be fired when 'property' value is '0' -->
@@ -103,22 +114,382 @@ color               (primary, accent, warn)
   <div>
     <mat-icon matBadge="8" matBadgeOverlap="false" matBadgePosition="above before">notifications_active</mat-icon>
   </div>
+
+  <div class="spinner">
+  <!-- MatProgressSpinner Module Tutorial -->
+  <!-- <mat-progress-spinner value="40"></mat-progress-spinner> -->
+  <mat-spinner class="loadSpinner" [diameter]="50" *ngIf="showSpinner" color="accent"></mat-spinner>
+  <button mat-raised-button color="primary" (click)="loadData()"> Load Data</button>
+  </div>
 </div>
 
-<div class="spinner">
-  <!-- MatProgressSpinner Module Tutorial -->
-
-<!-- <mat-progress-spinner value="40"></mat-progress-spinner> -->
-<mat-spinner *ngIf="showSpinner" color="warn"></mat-spinner>
-<button mat-raised-button color="primary" (click)="loadData()"> Load Data </button>
 
 <!-- SideNav Tutorial -->
-<!-- <mat-sidenav-container>
-  <mat-sidenav opened>Sidenav</mat-sidenav>
-  <mat-sidenav-content>
-    Main 
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
+<div class="sideNavBtn">
+  <button mat-stroked-button color="warn" (click)="sideNavOpened=!sideNavOpened">Toggle SideNav Opened</button>
+  <!-- Click Event using template reference variable : sidenav -->
+  <button mat-stroked-button color="basic" (click)="sidenav.open()">Open</button>
+  <button mat-stroked-button color="warn" (click)="sidenav.close()">Close</button>
+  <button mat-stroked-button color="basic" (click)="sidenav.toggle()">Toggle</button>
+  <button mat-stroked-button color="warn" [matMenuTriggerFor]="appMenu">Web Technology</button>
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="lazyMenu" [matMenuTriggerData]="{setDataValue: 'Dev-Coder',
+hobby:'Coding'}">Dev-Coder</button>
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="lazyMenu" [matMenuTriggerData]="{setDataValue: 'Live-to-Code',
+hobby:'Boxing'}">Live to Code</button>
+</div> 
+
+<mat-menu #appMenu="matMenu" xPosition="after" yPosition="below">
+  <button class="appMenuBtn" mat-menu-item [matMenuTriggerFor]="frontSubMenu">Front End</button>
+  <button class="appMenuBtn" mat-menu-item [matMenuTriggerFor]="backSubMenu">Back End</button>
+</mat-menu>  
+
+<mat-menu #frontSubMenu="matMenu">
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Front End: Angular')">Angular</button>
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Front End: React')">React</button>
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Front End: Vue')">Vue</button>
+</mat-menu>
+
+<mat-menu #backSubMenu="matMenu">
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Back End: Node.js')">Node.js</button>
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Back End: Express.js')">Express.js</button>
+  <button class="appMenuBtn" mat-menu-item (click)="showValue('Back End: Python')">Python</button>
+</mat-menu>
+
+<mat-menu #lazyMenu="matMenu">
+  <ng-template matMenuContent let-setDataValue="setDataValue" let-hobby="hobby">
+    <button class="appMenuBtn" mat-menu-item>Settings</button>
+    <button class="appMenuBtn" mat-menu-item>Logout: @{{setDataValue}} -- {{hobby}}</button>
+  </ng-template>
+</mat-menu>
+
+<div class="sideNavContainer">
+  <mat-sidenav-container>
+    <!-- mode = "side" "over" "push" -->
+    <!-- #sidenav : template reference variable -->
+    <mat-sidenav class="mat-title" #sidenav (opened)="log('Opened')" (closed)="log('Closed')" mode="side" [(opened)]="sideNavOpened">
+      <div>Sidenav</div>
+      <div class="mat-body-2">
+        <mat-list>
+          <mat-list-item>
+            <button class="appMenuBtn" mat-flat-button disableRipple>Angular Tutorial</button>
+          </mat-list-item>
+          <mat-list-item>
+            <button class="appMenuBtn" mat-flat-button disableRipple>React Tutorial</button>
+          </mat-list-item>
+          <mat-list-item>
+            <button class="appMenuBtn" mat-flat-button disableRipple>Vue Tutorial</button>
+          </mat-list-item>
+          <mat-list-item>
+            <button class="appMenuBtn" mat-flat-button disableRipple>Node.js Tutorial</button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="mat-title">Main Area Content</div>
+      <div class="mat-body-2">
+        <!-- dense property is used to reduce the font size -->
+        <!-- <mat-list dense> -->
+        <mat-list>
+          <mat-list-item class="mainAreaList">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia odit distinctio nostrum maxime blanditiis eius velit explicabo facere porro voluptas illum quos eum rerum in iusto minus, sequi exercitationem reiciendis!
+          </mat-list-item>
+          <mat-list-item class="mainAreaList">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia odit distinctio nostrum maxime blanditiis eius velit explicabo facere porro voluptas illum quos eum rerum in iusto minus, sequi exercitationem reiciendis!
+          </mat-list-item>
+          <mat-list-item class="mainAreaList">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia odit distinctio nostrum maxime blanditiis eius velit explicabo facere porro voluptas illum quos eum rerum in iusto minus, sequi exercitationem reiciendis!
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
 
+<!-- <div class="listLayout">
+  <mat-list>
+    <mat-list-item>Item 1</mat-list-item>
+    <mat-list-item>Item 2</mat-list-item>
+    <mat-list-item>Item 3</mat-list-item>
+  </mat-list>
+  <mat-nav-list>
+    <a mat-list-item href="#">Home</a>
+    <a mat-list-item href="#">About</a>
+    <a mat-list-item href="#">Services</a>
+  </mat-nav-list>
+</div> -->
+
+<!--  Mat List Tutorial -->
+
+<!-- <div class="row">
+  <mat-list class="matLineList">
+    <mat-list-item>
+      <mat-icon matListIcon>home</mat-icon>
+      <h3 matLine>Home</h3>
+      <p matLine>Deliverable</p>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>folder</mat-icon>
+      <h3 matLine>Folder</h3>
+      <p matLine>Deliverable</p>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>assignment_ind</mat-icon>
+      <h3 matLine>Assignee</h3>
+      <p matLine>Processing</p>
+    </mat-list-item>
+  </mat-list>
+</div> -->
+
+<!-- ExpansionPanel Component Tutorial : BEGIN -->
+
+<div class="row expansionContainer">
+<!-- Checkout basic built-in methods for mat-accordion --> 
+<!-- to hide right corner navigation icon : use 'hideToggle' -->
+  <mat-accordion multi="false">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="mat-title">
+        Angular Fundamentals
+      </mat-panel-title>
+      <mat-panel-description class="mat-subheading-2">
+        Total Duration: 3 hours
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p class="mat-body-2">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab aut natus atque odit quasi dolor aliquid omnis ipsa, mollitia numquam totam blanditiis magnam amet. Fugiat ad numquam dolores tempore accusamus, quod repudiandae laudantium possimus molestias quisquam, excepturi ratione cum velit in nesciunt quas perferendis ex vero temporibus quaerat. Odio recusandae aut necessitatibus laudantium ducimus? Assumenda ullam sint nihil officia? Rerum mollitia perferendis beatae quo, tempora eligendi quisquam id vitae error voluptate repudiandae nihil facere amet doloremque deserunt vero impedit consequatur nesciunt consequuntur eveniet voluptatum! Fugit porro delectus mollitia quis placeat illum aut, ullam distinctio tenetur optio esse reiciendis dolores! Odio maiores ipsam at. Cumque at asperiores laborum inventore ipsum mollitia, aliquid ratione itaque facere similique impedit totam exercitationem hic corrupti doloribus architecto repellat, voluptas sequi fugiat ut ducimus temporibus? Debitis, voluptatibus cumque! Similique asperiores aspernatur cum omnis eos dolor deserunt, dolorem corrupti molestiae fugit illo architecto esse repudiandae eligendi blanditiis obcaecati. Vel, suscipit odit eum ducimus aliquid cupiditate, quo dolor tempora commodi laborum earum pariatur repudiandae laudantium illum possimus in facilis voluptate qui minus debitis! Aliquid, illo dicta veniam officiis maiores sequi deleniti provident fugit numquam harum reprehenderit nisi similique ipsa nam eum iusto impedit, magni totam quaerat quis molestias.
+    </p>
+    <mat-action-row>
+      <button mat-raised-button color="primary">Enroll</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="mat-title">
+        Angular Material
+      </mat-panel-title>
+      <mat-panel-description class="mat-subheading-2">
+        Total Duration: 2 hours
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p class="mat-body-2">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab aut natus atque odit quasi dolor aliquid omnis ipsa, mollitia numquam totam blanditiis magnam amet. Fugiat ad numquam dolores tempore accusamus, quod repudiandae laudantium possimus molestias quisquam, excepturi ratione cum velit in nesciunt quas perferendis ex vero temporibus quaerat. Odio recusandae aut necessitatibus laudantium ducimus? Assumenda ullam sint nihil officia? Rerum mollitia perferendis beatae quo, tempora eligendi quisquam id vitae error voluptate repudiandae nihil facere amet doloremque deserunt vero impedit consequatur nesciunt consequuntur eveniet voluptatum! Fugit porro delectus mollitia quis placeat illum aut, ullam distinctio tenetur optio esse reiciendis dolores! Odio maiores ipsam at. Cumque at asperiores laborum inventore ipsum mollitia, aliquid ratione itaque facere similique impedit totam exercitationem hic corrupti doloribus architecto repellat, voluptas sequi fugiat ut ducimus temporibus? Debitis, voluptatibus cumque! Similique asperiores aspernatur cum omnis eos dolor deserunt, dolorem corrupti molestiae fugit illo architecto esse repudiandae eligendi blanditiis obcaecati. Vel, suscipit odit eum ducimus aliquid cupiditate, quo dolor tempora commodi laborum earum pariatur repudiandae laudantium illum possimus in facilis voluptate qui minus debitis! Aliquid, illo dicta veniam officiis maiores sequi deleniti provident fugit numquam harum reprehenderit nisi similique ipsa nam eum iusto impedit, magni totam quaerat quis molestias.
+      </p>
+      <mat-action-row>
+        <button mat-raised-button color="primary">Enroll</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<!-- ExpansionPanel Component Tutorial : End -->
+
+<!-- Card Component Tutorial : BEGIN : Uncomment to view the component on browser.-->
+<!-- <div class="row cardContainer">
+  <mat-card>
+    <mat-card-title>
+      Card Title
+    </mat-card-title>
+    <mat-card-content>
+      This is the card content
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" align="end">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
+<!-- Card Component Tutorial : END -->
+
+<!-- Tabs Component Tutorial : BEGIN -->
+<div class="row tabContainer">
+  <mat-tab-group #templateRefTabs (selectedTabChange)="logChange(templateRefTabs.selectedIndex)">
+    <mat-tab label="Angular">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sequi laborum ipsum natus nesciunt est in quidem soluta fuga, rerum tempora eum asperiores atque quibusdam repudiandae. 
+      </p>
+      <p>Cumque minima maiores aperiam cum, provident ea aliquam alias reprehenderit saepe temporibus officia sed.</p>
+    </mat-tab>
+    <mat-tab label="React">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sequi laborum ipsum natus nesciunt est in quidem soluta fuga, rerum tempora eum asperiores atque quibusdam repudiandae. 
+      </p>
+      <p>Cumque minima maiores aperiam cum, provident ea aliquam alias reprehenderit saepe temporibus officia sed.</p>  
+    </mat-tab>
+    <mat-tab label="Vue">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sequi laborum ipsum natus nesciunt est in quidem soluta fuga, rerum tempora eum asperiores atque quibusdam repudiandae. 
+      </p>
+      <p>Cumque minima maiores aperiam cum, provident ea aliquam alias reprehenderit saepe temporibus officia sed.</p>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<!-- Tabs Component Tutorial : END -->
+
+<!-- Stepper Component Tutorial : BEGIN -->
+<div class="row stepperContainer">
+  <mat-horizontal-stepper linear>
+    <mat-step label="Shipping Address" completed="true">
+      <p>Shipping Address Details</p>
+    </mat-step>
+    <mat-step label="Billing Address" completed="false" optional>
+      <p>Billing Address Details</p>
+      <!-- Stepper Button Attributes -->
+      <!-- <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div> -->
+    </mat-step>
+    <mat-step label="Place Order" completed="false">
+      <p>Order Details</p>
+    </mat-step>
+  </mat-horizontal-stepper>
+   <mat-vertical-stepper linear>
+    <mat-step label="Shipping Address" completed="true">
+      <p>Shipping Address Details</p>
+    </mat-step>
+    <mat-step label="Billing Address" completed="false" optional>
+      <p>Billing Address Details</p>
+      <!-- Stepper Button Attributes -->
+      <!-- <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div> -->
+    </mat-step>
+    <mat-step label="Place Order" completed="false">
+      <p>Order Details</p>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+<!-- Stepper Component Tutorial : END -->
+
+<!-- @Input Component Tutorial : BEGIN -->
+<div class="row inputContainer">
+  <!-- float-label : never, auto, always -->
+  <!-- hideRequiredMarker is used to hide the asterisk on input field -->
+  <!-- appearance : legacy, standard, fill, outline -->
+  <mat-form-field color="accent" float-label="always" appearance=
+  "fill">
+    <mat-label>UserName</mat-label>
+    <input matInput required>
+    <mat-hint align="end" style="font-size: 12px;"><i>Min 5 characters</i></mat-hint>
+  </mat-form-field>
+  <mat-form-field color="accent" float-label="always" appearance=
+  "outline">
+    <mat-label>Email</mat-label>
+    <input matInput required>
+    <mat-hint align="end" style="font-size: 12px;"><i>Ex: george@example.com</i></mat-hint>
+  </mat-form-field>
+<!-- @Input Component Tutorial : END -->
+<!-- Select Control Component Tutorial : BEGIN -->
+  <mat-form-field color="accent" float-label="always" appearance="outline">
+    <mat-label>Topics</mat-label>
+    <mat-select [(value)]="selectedValue">
+      <mat-option>None</mat-option>
+      <mat-option value="angular">Angular</mat-option>
+      <mat-option value="react">React</mat-option>
+      <mat-option value="vue">Vue</mat-option>
+    </mat-select>
+    <mat-hint align="end" style="font-size: 12px;"><i>Selected Topic : </i>
+      <strong>{{selectedValue}}</strong>
+    </mat-hint>
+  </mat-form-field>
+<!-- Select Control Component Tutorial : END -->
+
+<!-- Select Control : OptionGroup Component Tutorial : BEGIN -->
+  <mat-form-field color="primary" float-label="always" appearance="outline">
+    <mat-label>Topics</mat-label>
+    <!-- add 'multiple' attribute to turn select optionGroup to checkBoxes -->
+    <mat-select multiple [(value)]="selectedOptValue">
+      <mat-option>None</mat-option>
+      <mat-optgroup label="Web" style="font-style: italic; font-weight: 500;">
+        <mat-option value="angular">Angular</mat-option>
+        <mat-option value="react">React</mat-option>
+        <mat-option value="vue">Vue</mat-option>
+      </mat-optgroup>
+      <mat-optgroup label="Mobile" style="font-style: italic; font-weight: 500;">
+        <mat-option value="ionic">Ionic</mat-option>
+        <mat-option value="flutter">Flutter</mat-option>
+        <mat-option value="reactnative">React Native</mat-option>
+      </mat-optgroup>
+    </mat-select>
+    <mat-hint align="end" style="font-size: 13px;"><i>Selected Topic : </i>
+      <strong>{{selectedOptValue}}</strong>
+    </mat-hint>
+  </mat-form-field>
+<!-- Select Control : OptionGroup Component Tutorial : END -->
+
+<!-- AutoComplete Component Tutorial : BEGIN -->
+<form>
+  <mat-form-field>
+    <input type="text" matInput [matAutocomplete]="auto" [formControl]="myControl"/>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <!-- autoCompleteOptions,objectOptions,filteredOptions -->
+      <!-- <mat-option *ngFor="let option of objectOptions" [value]="option"> -->
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        <!-- Uncomment Below line of code when using objectOptions || autoCompleteOptinos -->
+        <!-- {{option.name}} -->
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<!-- AutoComplete Component Tutorial : END -->
+
+</div>
+
+<!-- CheckBox & Radio Component Tutorial : BEGIN -->
+<div class="row inputContainer">
+  <mat-checkbox>
+    Credit/Debit Card
+  </mat-checkbox>
+  <mat-checkbox labelPostion="before" color="primary">
+    Pay Later
+  </mat-checkbox>
+  <mat-checkbox labelPostion="before">
+    UPI
+  </mat-checkbox>
+
+  <mat-radio-group>
+    <mat-radio-button value="angular">Angular</mat-radio-button>
+    <mat-radio-button value="react">React</mat-radio-button>
+    <mat-radio-button value="vue">Vue</mat-radio-button>
+  </mat-radio-group>
+
+</div>
+<!-- CheckBox & Radio Component Tutorial : END -->
+
+<!-- ToolTip Component Tutorial : BEGIN -->
+<div class="row inputContainer">
+  <button mat-raised-button matTooltip>Hello</button>
+</div>
+<!-- ToolTip Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<!-- MatGridList Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<!-- MatGridList Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<!-- MatGridList Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<!-- MatGridList Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<!-- MatGridList Component Tutorial : END -->
+
+<!-- MatGridList Component Tutorial : BEGIN -->
+<div class="row gridContainer">
+  <mat-grid-list cols="10" rowHeight="fit" style="height:60px;" gutterSize="50px">
+    <mat-grid-tile>Tile 1</mat-grid-tile>
+    <mat-grid-tile>Tile 2</mat-grid-tile>
+    <mat-grid-tile>Tile 3</mat-grid-tile>
+    <mat-grid-tile>Tile 4</mat-grid-tile>
+    <mat-grid-tile>Tile 5</mat-grid-tile>
+    <mat-grid-tile>Tile 6</mat-grid-tile>
+    <mat-grid-tile>Tile 7</mat-grid-tile>
+    <mat-grid-tile>Tile 8</mat-grid-tile>
+    <mat-grid-tile>Tile 9</mat-grid-tile>
+    <mat-grid-tile>Tile 10</mat-grid-tile>
+  </mat-grid-list>
+</div>
+<!-- MatGridList Component Tutorial : END -->
 

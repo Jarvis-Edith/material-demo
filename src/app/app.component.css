@@ -1,9 +1,20 @@
+/* NavBar Styles */
+.navbar{
+    justify-content: space-between;
+}
+.navbar .pageHeader{
+    letter-spacing: 0.1rem;
+}
+.navbar span{
+    padding-right: 3rem;
+}
+/* Button Styles */
 button{
-    margin: 2rem;
+    margin: 1rem 1.2rem 1rem 1.5rem;
 }
-.cusLink{
+/* .cusLink{
     margin: 0% 50% 0% 50%;
-}
+} */
 .toggleCheckedValues{
     display: flex;
     justify-content: center;
@@ -15,21 +26,139 @@ button{
 .buttonElement{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 2rem;
 }
 .notify{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 3rem;
 }
 .spinner{
     display: flex;
     justify-content: center;
-    margin-top: 3rem;
+    align-items: center;
 }
-.navbar{
-    justify-content: space-between;
+
+.spinner .loadSpinner{
+    margin-right: 50px;
 }
-.navbar span{
-    padding-right: 1rem;
+
+.sideNavBtn{
+    display: flex;
+    justify-content: center;
 }
+
+.sideNavContainer{
+    padding: 10px;
+}
+
+mat-sidenav-container{
+    height: 270px;
+    border-radius: 15px;
+    background-color: cadetblue;
+}
+
+mat-sidenav, mat-sidenav-content{
+    /* border-radius: 0px -15px -15px 0px; */
+    padding: 16px;
+}
+
+mat-sidenav{
+    background-color: lightcoral;
+    width: 240px;
+    height: 100%;
+}
+
+.appMenuBtn{
+    display: flex;
+    justify-content: center;
+    margin: 0rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.9rem;
+}
+
+.listLayout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainAreaList{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.matLineList{
+    display: flex;
+    /* justify-content: space-around; */
+}
+
+.gridContainer{
+    padding: 10px;
+}
+
+mat-grid-list{
+    display: flex;
+    justify-content: center;
+}
+
+mat-grid-tile{
+    background-color: darkcyan;
+}
+
+.expansionContainer{
+    padding: 10px;
+}
+
+.expansionContainer mat-expansion-panel p{
+    text-align: justify;
+}
+
+.cardContainer{
+    padding: 10px;
+    display: flex;
+}
+
+.tabContainer{
+    padding: 10px;
+    display: flex;
+}
+
+.tabContainer p{
+    margin: 1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+    text-align: justify;
+}
+
+.stepperContainer{
+    /* display: flex; */
+    padding: 10px;
+}
+
+.inputContainer{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+mat-form-field{
+    width: 320px;
+    margin: 0rem 2rem 0rem 2rem;
+}
+
+.selectContainer{
+    padding: 10px;
+}
+
